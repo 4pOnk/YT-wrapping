@@ -3,14 +3,14 @@ const puppeteer = require('puppeteer');
 async function run(proxy) {
   const browser = await puppeteer.launch({
     headless: false,
-    args: [ "--no-sandbox", '--proxy-server=' + proxy ],
+    // args: [ "--no-sandbox", '--proxy-server=' + proxy ],
     executablePath: "C:\\Program Files\\Google\\Chrome Dev\\Application\\chrome.exe" // <-- chrome path here
   });
   const page = await browser.newPage();
 
   await page.setDefaultNavigationTimeout(0);
 
-  const pageUrl = 'https://youtu.be/PW08Ehik22U';
+  const pageUrl = 'https://youtu.be/eCmRORAXWzI';
 
   const dimensions = await page.evaluate(() => {
     return {
@@ -25,14 +25,33 @@ async function run(proxy) {
     // Remove the timeout
     timeout: 0
 });
+
+
 try{
   await page.click('#movie_player > div.ytp-cued-thumbnail-overlay > button');
 }catch (e) {}
+
+await setInterval(() => {
+  
+  page.mouse.move(10, 50);
+  page.mouse.click(10, 50);
+  page.hover('.video-stream');
+
+}, 1000)
+
+await setInterval(() => {
+  
+  page.mouse.move(15, 100);
+  page.mouse.click(15, 100);
+
+}, 3000)
+
 }
+
 
 run('115.74.254.226:8080');
 // run('66.70.198.229:999');
-run('174.142.28.235:3128');
+// run('174.142.28.235:3128');
 
 // run('64.235.204.107:3128');
 // run('64.124.38.125:8080');
